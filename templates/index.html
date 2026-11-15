@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>RoadEye</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <header>
+    <h1>RoadEye <span>Vehicle &amp; Pedestrian Detection</span></h1>
+    <div id="alert-banner" class="banner safe">ALL CLEAR</div>
+  </header>
+
+  <main>
+    <section class="video-wrap">
+      <img id="feed" src="{{ url_for('video_feed') }}" alt="Live detection feed">
+      <div class="stats">
+        <span>FPS: <b id="fps">0</b></span>
+        <span>Objects: <b id="count">0</b></span>
+        <span>Closest: <b id="closest">–</b></span>
+        <span>Source: <b id="source">–</b></span>
+      </div>
+    </section>
+
+    <aside>
+      <div class="card">
+        <h2>Video source</h2>
+        <div class="row">
+          <input id="cam-index" type="number" min="0" value="0" aria-label="Webcam index">
+          <button id="btn-cam">Use webcam</button>
+        </div>
+        <label class="file">
+          <input id="file" type="file" accept="video/*">
+          <span>Upload video file</span>
+        </label>
+        <div class="row">
+          <button id="btn-pause">Pause</button>
+          <button id="btn-sound" class="on">Sound: ON</button>
+        </div>
+        <p id="msg" class="msg"></p>
+      </div>
+
+      <div class="card">
+        <h2>Settings</h2>
+        <label>Danger distance <b><span id="v-danger"></span> m</b>
+          <input id="danger_m" type="range" min="1" max="20" step="0.5"></label>
+        <label>Warning distance <b><span id="v-warning"></span> m</b>
+          <input id="warning_m" type="range" min="2" max="40" step="0.5"></label>
+        <label>Confidence <b><span id="v-conf"></span></b>
+          <input id="confidence" type="range" min="0.1" max="0.9" step="0.05"></label>
+        <label>Alert zone width <b><span id="v-zone"></span>%</b>
+          <input id="zone_width" type="range" min="0.2" max="1" step="0.05"></label>
+      </div>
+
+      <div class="card">
+        <h2>Detections</h2>
+        <table>
+          <thead><tr><th>Object</th><th>Distance</th><th>Conf.</th></tr></thead>
+          <tbody id="det-body"></tbody>
+        </table>
+      </div>
+    </aside>
+  </main>
+
+  <script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>
